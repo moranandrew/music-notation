@@ -21,6 +21,8 @@ public class G {
 
     public void set(int x, int y) {this.x = x; this.y = y;}
 
+    public void set(V v) {x = v.x; y = v.y;}
+
     public void add(V v) {x += v.x; y += v.y;}
   }
 
@@ -49,5 +51,24 @@ public class G {
 
   //-------------------------------------PL----------------------------------------------------------
   // Poly Line
-  public static class PL {}
+  public static class PL {
+    public V[] points;
+
+    public PL(int count) {
+      points = new V[count];
+      for (int i = 0; i < count; i++) {
+        points[i] = new V(0, 0);
+      }
+    }
+
+    public int size() {return points.length;}
+
+    public void drawN(Graphics g, int n) {    // draw N number of points
+      for (int i = 1; i < n; i++) {
+        g.drawLine(points[i - 1].x, points[i - 1].y, points[i].x, points[i].y);
+      }
+    }
+
+    public void draw(Graphics g) {drawN(g, size());}
+  }
 }
