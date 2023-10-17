@@ -15,6 +15,9 @@ public class G {
   //-------------------------------------V----------------------------------------------------------
   // Vector
   public static class V {
+
+    public static Transform T = new Transform();
+
     public int x,y;
 
     public V(int x, int y) {this.set(x, y);}
@@ -24,6 +27,18 @@ public class G {
     public void set(V v) {x = v.x; y = v.y;}
 
     public void add(V v) {x += v.x; y += v.y;}
+
+    public void blend(V v, int k) {set((k * x + v.x) / (k + 1), (k * y + v.y) / (k + 1));}
+
+    public void setT(V v) {set(v.tx(), v.ty());}
+
+    public int tx() {return x * T.n / T.d + T.dx;}
+
+    public int ty() {return y * T.n / T.d + T.dy;}
+
+
+
+
   }
 
   //-------------------------------------VS----------------------------------------------------------
