@@ -9,7 +9,7 @@ import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ink extends G.PL implements I.Show, Serializable {
+public class Ink implements I.Show, Serializable {  // TODO: verify removal of extends G.PL
 
   public static Buffer BUFFER = new Buffer();
   public Norm norm;
@@ -42,32 +42,38 @@ public class Ink extends G.PL implements I.Show, Serializable {
   public static class Buffer extends G.PL implements I.Show, I.Area {
     public static final int MAX = UC.inkBufferMax;
     public int n;  // this is how many points are in the buffer
+    public G.BBox bBox = new G.BBox();
 
     private Buffer() {super(MAX);}  // is private to make sure no one else can create one.
 
     public void clear() {n = 0;}  // clear the buffer
 
     public void add(int x, int y) {
-      if (n < MAX) {points[n++].set(x, y);}
+      if (n < MAX) {points[n++].set(x, y); bBox.add(x, y);}
     }
 
     @Override
     public boolean hit(int x, int y) {return true;}
 
     @Override
-    public void dn(int x, int y) {clear(); add(x, y);}
+    public void dn(int x, int y) {clear(); bBox.set(x, y); add(x, y);}
 
     @Override
-    public void up(int x, int Y) {
-
-    }
+    public void up(int x, int Y) {}
 
     @Override
-    public void drag(int x, int y) {add(x, y);}
+    public void drag(int x, int y) {add(x, y); bBox.add(x, y);}
 
     //show the actual buffer
     @Override
     public void show(Graphics g) {drawN(g, n); bBox.draw(g);}
+
+    public void superSample(G.PL pl) {  // TODO: verify correct
+      int km1 = pl.size() - 1, nm1 = n - 1;
+      for(int i = 0; i <= km1; i++) {
+        pl.points[i].set(points[i * nm1 / km1]);
+      }
+    }
   }
 
   //------------------------------Norm-----------------------------------------

@@ -12,6 +12,9 @@ public class G implements Serializable {
   public static int rnd(int max) {return RND.nextInt(max);}
   public static Color rndColor() {return new Color(rnd(256), rnd(256), rnd(256));}
   public static void fillBack(Graphics g) {g.setColor(Color.WHITE); g.fillRect(0, 0, 5000, 5000);}
+  public static void drawCircle(Graphics g, int x, int y, int r) {
+    g.drawOval(x - r, y - r, r + r, r + r);
+  }
 
   //-------------------------------------V----------------------------------------------------------
   // Vector
@@ -22,6 +25,8 @@ public class G implements Serializable {
     public int x,y;
 
     public V(int x, int y) {this.set(x, y);}
+
+    public V(V v) {this.set(v);}
 
     public void set(int x, int y) {this.x = x; this.y = y;}
 
@@ -39,18 +44,27 @@ public class G implements Serializable {
 
     //----------------------------------Transform---------------------------------------------------
     // single scaling for x and y
-
-    //TODO:
     public static class Transform implements Serializable{
       int dx, dy, n , d;  // n = numerator, d = dominator
 
-      public void set() {}
+      public void set(VS oVS, VS nVS) {
+        setScale(oVS.size.x, oVS.size.y, nVS.size.x, nVS.size.y);
+        dx = setOff(oVS.loc.x, oVS.size.x, nVS.loc.x, nVS.size.x);
+        dy = setOff(oVS.loc.y, oVS.size.y, nVS.loc.y, nVS.size.y);
+      }
 
-      public void set() {}
+      public void set(BBox from, VS to) {
+        setScale(from.h.size(), from.v.size(), to.size.x, to.size.y);
+        dx = setOff(from.h.lo, from.h.size(), to.loc.x, to.size.x);
+        dy = setOff(from.v.lo, from.v.size(), to.loc.y, to.size.y);
+      }
 
-      public void setScale() {}
+      public void setScale(int oW, int oH, int nW, int nH) {  // old width, old height
+        n = (nW > nH) ? nW : nH;  // get the bigger number
+        d = (oW > oH) ? oW : oH; // old scale as the divisor
+      }
 
-      public int setOff(int )
+      public int setOff(int oX, int oW, int nX, int nW) {return(-oX - oW / 2) * n;}  // TODO: verify
     }
   }
 
@@ -71,14 +85,28 @@ public class G implements Serializable {
 
   //-------------------------------------LoHi--------------------------------------------------------
   // Two points sorted by lowest then highest value
-  public static class LoHi implements Serializable{}
+  public static class LoHi implements Serializable {
+    public int lo, hi;
+
+    public LoHi(int min, int max) {lo = min; hi = max;}
+
+    public void set(int x) {lo = x; hi = x;}
+
+    public void add(int x) {
+      if (x < lo) {lo = x;}
+      if (x > hi) {hi = x;}
+    }
+
+    // interval . scaling . width . size routine
+    public int size() {return (hi - lo == 0) ? 1 : (hi - lo);}
+  }
 
   //-------------------------------------BBox----------------------------------------------------------
   // Bounding Box
-  public static class BBox implements Serializable{   // TODO: need to figure this out
+  public static class BBox implements Serializable {   // TODO: need to figure this out
     public LoHi h, v;
 
-    public  BBox() {h = new LoHi(0,0); v = LoHi(0,0);}
+    public  BBox() {h = new LoHi(0,0); v = new LoHi(0,0);}
 
     public void set(int x, int y) {h.set(x); v.set(y);}
 
@@ -86,7 +114,7 @@ public class G implements Serializable {
 
     public void add(V v) {add(v.x, v.y);}
 
-    public VS get????() {return new VS(h.lo, v.lo, h.size(), v.size());}
+    public VS getNewVS() {return new VS(h.lo, v.lo, h.size(), v.size());}
 
     public void draw(Graphics g) {g.drawRect(h.lo, v.lo, h.size(), v.size());}
   }
@@ -109,8 +137,21 @@ public class G implements Serializable {
       for (int i = 1; i < n; i++) {
         g.drawLine(points[i - 1].x, points[i - 1].y, points[i].x, points[i].y);
       }
+      drawNDots(g, n);
     }
 
     public void draw(Graphics g) {drawN(g, size());}
+
+    public void drawNDots(Graphics g, int n) {
+      g.setColor(Color.BLUE);
+      for (int i = 0; i < n; i++) {
+        drawCircle(g, points[i].x, points[i].y, 4);
+      }
+    }
+    public void transform() {
+      for (int i = 0; i < points.length; i++) {
+        points[i].setT(points[i]);
+      }
+    }
   }
 }
