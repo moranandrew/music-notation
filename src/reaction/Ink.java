@@ -6,9 +6,10 @@ import graphicsLib.I;
 import graphicsLib.UC;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ink implements I.Show {
+public class Ink extends G.PL implements I.Show, Serializable {
 
   public static Buffer BUFFER = new Buffer();
   public Norm norm;
@@ -29,7 +30,7 @@ public class Ink implements I.Show {
   }
 
   //------------------------------------------LIST--------------------------------------------------
-  public static class List extends ArrayList<Ink> implements I.Show {
+  public static class List extends ArrayList<Ink> implements I.Show , Serializable {
 
     @Override
     public void show(Graphics g) {
@@ -72,7 +73,7 @@ public class Ink implements I.Show {
   //------------------------------Norm-----------------------------------------
   // normalized coordinate system
 
-  public static class Norm extends G.PL {
+  public static class Norm extends G.PL implements Serializable{
     public static final int N = UC.normSampleSize, MAX = UC.normCoordMax;
     public static final G.VS NCS = new G.VS(0, 0, MAX, MAX); // coordinate box for transform
 

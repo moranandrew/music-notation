@@ -3,9 +3,10 @@ package graphicsLib;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.Random;
 
-public class G {
+public class G implements Serializable {
 
   public static Random RND = new Random();
   public static int rnd(int max) {return RND.nextInt(max);}
@@ -14,7 +15,7 @@ public class G {
 
   //-------------------------------------V----------------------------------------------------------
   // Vector
-  public static class V {
+  public static class V implements Serializable{
 
     public static Transform T = new Transform();
 
@@ -36,14 +37,26 @@ public class G {
 
     public int ty() {return y * T.n / T.d + T.dy;}
 
+    //----------------------------------Transform---------------------------------------------------
+    // single scaling for x and y
 
+    //TODO:
+    public static class Transform implements Serializable{
+      int dx, dy, n , d;  // n = numerator, d = dominator
 
+      public void set() {}
 
+      public void set() {}
+
+      public void setScale() {}
+
+      public int setOff(int )
+    }
   }
 
   //-------------------------------------VS----------------------------------------------------------
-  // Vector Size
-  public static class VS {
+  // Vector Size  //GOOD
+  public static class VS implements Serializable{
     public V loc, size;
 
     public VS(int x, int y, int w, int h) {loc = new V(x, y); size = new V(w, h);}
@@ -58,15 +71,29 @@ public class G {
 
   //-------------------------------------LoHi--------------------------------------------------------
   // Two points sorted by lowest then highest value
-  public static class LoHi {}
+  public static class LoHi implements Serializable{}
 
   //-------------------------------------BBox----------------------------------------------------------
   // Bounding Box
-  public static class BBox {}
+  public static class BBox implements Serializable{   // TODO: need to figure this out
+    public LoHi h, v;
+
+    public  BBox() {h = new LoHi(0,0); v = LoHi(0,0);}
+
+    public void set(int x, int y) {h.set(x); v.set(y);}
+
+    public void add(int x, int y) {h.add(x); v.add(y);}
+
+    public void add(V v) {add(v.x, v.y);}
+
+    public VS get????() {return new VS(h.lo, v.lo, h.size(), v.size());}
+
+    public void draw(Graphics g) {g.drawRect(h.lo, v.lo, h.size(), v.size());}
+  }
 
   //-------------------------------------PL----------------------------------------------------------
   // Poly Line
-  public static class PL {
+  public static class PL implements Serializable{
     public V[] points;
 
     public PL(int count) {

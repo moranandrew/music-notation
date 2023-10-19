@@ -12,4 +12,6 @@ public class UC {
   public static final int normCoordMax = 1000;
   public static Color inkColor = Color.BLACK;
   public static final int noMatchDist = 500000;
+  public static int dotThreshold = 5;
+  public static String shapeDbFileName = "shapeDB.dat";
 }
