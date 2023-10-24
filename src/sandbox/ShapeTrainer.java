@@ -45,6 +45,19 @@ public class ShapeTrainer extends Window {
   }
 
   public void mouseReleased(MouseEvent me) {
+    Ink ink = new Ink();
+    if (pList != null && pList.isShowDelete(ink.vs)) {
+      pList.showDelete(ink.vs);
+      repaint();
+      return;
+    }
+    Shape.DB.train(curName, ink.norm);
+    setState();
+    repaint();
+  }
+
+  /**
+  public void mouseReleased(MouseEvent me) {
     Ink.BUFFER.up(me.getX(), me.getY());
     Ink ink = new Ink();
     Shape.Prototype proto;
@@ -63,6 +76,7 @@ public class ShapeTrainer extends Window {
     setState();  // possibly unknown has converted to known.
     repaint();
   }
+   */
 
   @Override
   public void keyTyped(KeyEvent ke) {
