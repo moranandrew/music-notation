@@ -95,6 +95,8 @@ public class Ink implements I.Show, Serializable {  // TODO: verify removal of e
       for(int i = 1; i < N; i++) {
         g.drawLine(points[i-1].tx(), points[i-1].ty(), points[i].tx(), points[i].ty());
       }
+      System.out.println(points[0].x + ":" + points[0].y );
+      System.out.println(points[0].tx() + ":" + points[0].ty() );
     }
 
     public int dist(Norm norm) {

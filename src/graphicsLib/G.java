@@ -64,7 +64,7 @@ public class G implements Serializable {
         d = (oW > oH) ? oW : oH; // old scale as the divisor
       }
 
-      public int setOff(int oX, int oW, int nX, int nW) {return(-oX - oW / 2) * n;}  // TODO: verify
+      public int setOff(int oX, int oW, int nX, int nW) {return(-oX - oW / 2) * n/d + nX +nW/2;}  // TODO: verify
     }
   }
 

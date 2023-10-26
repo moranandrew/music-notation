@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 public class Shape implements Serializable {
@@ -124,7 +125,7 @@ public class Shape implements Serializable {
     }
   }
   //----------------------------------Database------------------------------------------
-  public static class Database extends TreeMap<String, Shape> {
+  public static class Database extends HashMap<String, Shape> {
 
     private Database() {
       super();

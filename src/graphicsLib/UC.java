@@ -14,4 +14,5 @@ public class UC {
   public static final int noMatchDist = 500000;
   public static int dotThreshold = 5;
   public static String shapeDbFileName = "shapeDB.dat";
+  public static int noBid = 1000;
 }
