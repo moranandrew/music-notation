@@ -81,6 +81,20 @@ public class G implements Serializable {
     }
 
     public boolean hit(int x, int y) {return loc.x<=x && loc.y<=y && x<=(loc.x + size.x) && y<=(loc.y + size.y);}
+
+
+    public int xM() {return loc.x + size.x / 2;}
+
+    public int xL() {return loc.x;}
+
+    public int xH() {return loc.x + size.x;}
+
+
+    public int yM() {return loc.y + size.y / 2;}
+
+    public int yL() {return loc.y;}
+
+    public int yH() {return loc.y + size.y;}
   }
 
   //-------------------------------------LoHi--------------------------------------------------------

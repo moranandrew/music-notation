@@ -1,6 +1,7 @@
 package sandbox;
 
 import graphicsLib.G;
+import graphicsLib.UC;
 import graphicsLib.Window;
 import reaction.*;
 
@@ -49,15 +50,61 @@ public class ReactionTest extends Window {
     public static class Box extends Mass {
         public G.VS vs;
         public Color c = G.rndColor();
+        public Boolean isOval = false;
 
         public Box(G.VS vs) {
             super("BACK");
             this.vs = vs;
+            addReaction(new Reaction("S-S") {
+                public int bid(Gesture g){
+                    int x = g.vs.xM(), y = g.vs.yL();
+                    if (Box.this.vs.hit(x, y)) {
+                        return Math.abs(x - Box.this.vs.xM());
+                    } else {
+                        return UC.noBid;
+                    }
+                }
+                public void act(Gesture g) {
+                    Box.this.delete();
+                }
+            });
+            addReaction(new Reaction("DOT") {
+                public  int bid(Gesture g) {
+                    int x = g.vs.xM(), y = g.vs.yL();
+                    if (Box.this.vs.hit(x, y)) {
+                        return Math.abs(x - Box.this.vs.xM());
+                    } else {
+                        return UC.noBid;
+                    }
+                }
+                public void act(Gesture g) {
+                    Box.this.c = G.rndColor();
+                }
+            });
+
+            addReaction(new Reaction("E-E") {
+                public  int bid(Gesture g) {
+                    int x = g.vs.xL(), y = g.vs.yM();
+                    if (Box.this.vs.hit(x, y)) {
+                        return Math.abs(x - Box.this.vs.xM());
+                    } else {
+                        return UC.noBid;
+                    }
+                }
+                public void act(Gesture g) {
+                    Box.this.isOval = !Box.this.isOval;
+                }
+            });
         }
 
         @Override
         public void show(Graphics g) {
-            vs.fill(g, c);
+            if (isOval) {
+                g.setColor(c);
+                g.fillOval(vs.loc.x, vs.loc.y, vs.size.x, vs.size.y);
+            } else {
+                vs.fill(g, c);
+            }
         }
     }
 }
