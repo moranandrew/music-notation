@@ -138,9 +138,20 @@ public class Shape implements Serializable {
       return DB.get(name);
     }
 
-    public void train(String name, Ink.Norm norm) {
+    public void addPrototype(String name) {
+      if (isLegal(name)){
+        forceGet(name).prototypes.add(new Prototype());
+      }
+    }
+
+    public void train(String name, Ink ink) {
       if (isLegal(name)) {
-        forceGet(name).prototypes.train(norm);
+        Shape rs = recognize(ink);  // recognize shape
+        if (rs == null || !rs.name.equals(name)) {
+          addPrototype(name);
+        } else {
+          forceGet(name).prototypes.train(ink.norm);
+        }
       }
     }
 

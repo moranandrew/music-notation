@@ -66,7 +66,10 @@ public class Ink implements I.Show, Serializable {  // TODO: verify removal of e
 
     //show the actual buffer
     @Override
-    public void show(Graphics g) {drawN(g, n); bBox.draw(g);}
+    public void show(Graphics g) {
+      drawN(g, n);
+      // bBox.draw(g);
+    }
 
     public void superSample(G.PL pl) {  // TODO: verify correct
       int km1 = pl.size() - 1, nm1 = n - 1;

@@ -51,7 +51,7 @@ public class ShapeTrainer extends Window {
       repaint();
       return;
     }
-    Shape.DB.train(curName, ink.norm);
+    Shape.DB.train(curName, ink);
     setState();
     repaint();
   }
