@@ -50,6 +50,7 @@ public class Gesture {
             Gesture gest = Gesture.getNew(ink);  // can fail if unrecognized
             Ink.BUFFER.clear();
             if (gest != null) {
+                System.out.println(gest.shape.name);
                 if(gest.shape.name.equals("N-N")) {
                     undo();
                 } else {

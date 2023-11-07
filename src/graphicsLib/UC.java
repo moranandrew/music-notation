@@ -15,4 +15,5 @@ public class UC {
   public static int dotThreshold = 5;
   public static String shapeDbFileName = "shapeDB.dat";
   public static int noBid = 1000;
+    public static int barToMarginSnap = 40;
 }
