@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class AppMusicEd extends Window {
-    static {new Layer("BACK"); new Layer("FORE");}
+    static {new Layer("BACK"); new Layer("NOTE"); new Layer("FORE");}
     public static Page PAGE;
 
     public AppMusicEd() {
@@ -36,6 +36,11 @@ public class AppMusicEd extends Window {
         G.fillBack(g);
         g.setColor(Color.BLACK);
         Layer.ALL.show(g);
+        if (PAGE != null) {
+            Glyph.CLEF_G.showAt(g, 8, 100, PAGE.margins.top + 4*8);
+            Glyph.HEAD_Q.showAt(g, 8, 200, PAGE.margins.top + 4*8);
+
+        }
         Ink.BUFFER.show(g);
     }
 
@@ -57,5 +62,13 @@ public class AppMusicEd extends Window {
     public static void main(String[] args) {
         PANEL = new AppMusicEd();
         Window.launch();
+        String fonts[] =
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+
+        for (int i = 0; i < fonts.length; i++) {
+            System.out.println(fonts[i]);
+        }
     }
+
+
 }

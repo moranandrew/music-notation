@@ -1,5 +1,6 @@
 package music;
 
+import graphicsLib.G;
 import reaction.Mass;
 
 import java.awt.*;
@@ -12,16 +13,20 @@ public class Sys extends Mass {
     public Page page = PAGE;
     public int iSys;
     public Sys.Fmt fmt;
+    public Time.List times;
 
 
     public Sys(int iSys, Sys.Fmt sysFmt) {
         super("BACK");
         this.iSys = iSys;
         this.fmt = sysFmt;
+        this.times = new Time.List(this);
         for (int i = 0; i < sysFmt.size(); i++) {
             addStaff(new Staff(i, sysFmt.get(i)));
         }
     }
+
+    public Time getTime(int x) {return times.getTime(x); }
 
     public int yTop() {return page.sysTop(iSys);}
 

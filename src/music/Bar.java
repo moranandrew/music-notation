@@ -36,6 +36,23 @@ public class Bar extends Mass {
             @Override
             public void act(Gesture g) {Bar.this.cycleType();}
         });
+
+        addReaction(new Reaction("DOT") {  // putting a dot on the bar
+            @Override
+            public int bid(Gesture g) {
+                int x = g.vs.xM(), y = g.vs.yM();
+                if (y < Bar.this.sys.yTop() || y > Bar.this.sys.yBot()) {return UC.noBid;}
+                int dist = Math.abs(x - Bar.this.x);
+                if (dist > 3*PAGE.sysFmt.maxH) {return UC.noBid;}
+                return dist;
+            }
+
+            @Override
+            public void act(Gesture g) {
+                if (g.vs.xM() < Bar.this.x) {Bar.this.toggleLeft();}
+                else{Bar.this.toggleRight();}
+            }
+        });
     }
 
     public void cycleType() {barType++; if (barType > 2) {barType = 0;}}
@@ -43,6 +60,7 @@ public class Bar extends Mass {
     public void toggleLeft() {barType = barType ^ LEFT;}  // exclusive Or for toggling bits
 
     public void toggleRight() {barType = barType ^ RIGHT;}  // exclusive Or for toggling bits
+
     @Override
     public void show(Graphics g) {
         int sysTop = sys.yTop(), y1 = 0, y2 = 0;  // y1, y2, top and bottom of connected component
@@ -99,8 +117,8 @@ public class Bar extends Mass {
                 thinBar(g, x - 2*H, y1, y2);
                 wings(g, x - 2*H, y1, y2, -H, H);}
             if ((barType & RIGHT) != 0) {
-                thinBar(g, x + 2*H, y1, y2);
-                wings(g, x + 2*H, y1, y2, -H, H);}  // TODO: need to finish
+                thinBar(g, x + H, y1, y2);
+                wings(g, x + H, y1, y2, H, H);}
         }
     }
 }

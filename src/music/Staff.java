@@ -56,6 +56,22 @@ public class Staff extends Mass {
                 PAGE.sysFmt.get(Staff.this.iStaff).toggleBarContinues();
             }
         });
+
+        addReaction(new Reaction("SW-SW") {  // add note to staff
+            @Override
+            public int bid(Gesture g) {
+                int x = g.vs.xM(), y = g.vs.yM();
+                if (x < PAGE.margins.left || x > PAGE.margins.right) {return UC.noBid;}
+                int H = Staff.this.H(), top = Staff.this.yTop() - H, bot = Staff.this.yBot() + H;
+                if (y < top || y > bot) {return UC.noBid;}
+                return 10;
+            }
+
+            @Override
+            public void act(Gesture g) {
+                new Head(Staff.this, g.vs.xM(), g.vs.yM());
+            }
+        });
     }
 
     public int sysOff() {return sys.fmt.staffOffset.get(iStaff);}
@@ -66,6 +82,8 @@ public class Staff extends Mass {
 
     @Override
     public void show(Graphics g) {}
+
+    public int H() {return fmt.H;}
 
 
     //------------------------------------------Fmt------------------------------------------------
