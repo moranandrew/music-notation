@@ -3,6 +3,7 @@ package music;
 import reaction.Mass;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Head extends Mass {
     public Staff staff;
@@ -13,9 +14,7 @@ public class Head extends Mass {
         super("NOTE");
         this.staff = staff;
         this.time = staff.sys.getTime(x);
-        int H = staff.H();
-        int top = staff.yTop() - H;
-        line = (y - top + H/2)/H - 1;
+        line = staff.lineOfY(y);
         System.out.println("Head constructor line: " + line);
     }
 
@@ -23,5 +22,12 @@ public class Head extends Mass {
     public void show(Graphics g) {
         int H = staff.H();
         Glyph.HEAD_Q.showAt(g, H, time.x, staff.yTop() + line*H);
+    }
+
+    public int W() {return 24*staff.H()/10;}  // calculate width of single head
+
+    //------------------------------------------List-------------------------------------------------------
+    public static class List extends ArrayList<Head>{
+
     }
 }

@@ -72,6 +72,40 @@ public class Staff extends Mass {
                 new Head(Staff.this, g.vs.xM(), g.vs.yM());
             }
         });
+
+        addReaction(new Reaction("W-S") {  // This is a Quarter Rest
+            @Override
+            public int bid(Gesture g) {
+                int x = g.vs.xL(), y = g.vs.yM();
+                if (x < PAGE.margins.left || x > PAGE.margins.right) {return UC.noBid;}
+                int top = Staff.this.yTop(), bot = Staff.this.yBot();
+                if (y < top || y > bot) {return UC.noBid;}
+                return 10;
+            }
+
+            @Override
+            public void act(Gesture g) {
+                Time t = Staff.this.sys.getTime(g.vs.xL());
+                new Rest(Staff.this, t);
+            }
+        });
+
+        addReaction(new Reaction("E-S") {  // This is an Eighth Rest
+            @Override
+            public int bid(Gesture g) {
+                int x = g.vs.xL(), y = g.vs.yM();
+                if (x < PAGE.margins.left || x > PAGE.margins.right) {return UC.noBid;}
+                int top = Staff.this.yTop(), bot = Staff.this.yBot();
+                if (y < top || y > bot) {return UC.noBid;}
+                return 10;
+            }
+
+            @Override
+            public void act(Gesture g) {
+                Time t = Staff.this.sys.getTime(g.vs.xL());
+                (new Rest(Staff.this, t)).nFlag = 1;
+            }
+        });
     }
 
     public int sysOff() {return sys.fmt.staffOffset.get(iStaff);}
@@ -84,6 +118,11 @@ public class Staff extends Mass {
     public void show(Graphics g) {}
 
     public int H() {return fmt.H;}
+
+    public int yLine(int n) {return yTop() + n*H();}
+
+    public int lineOfY(int y) {return (y + 100*H() - yTop() + H()/2)/H() - 100;}
+    // bias added in to deal with possible negative numbers and then removing the bias after
 
 
     //------------------------------------------Fmt------------------------------------------------
