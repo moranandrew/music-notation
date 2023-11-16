@@ -13,6 +13,28 @@ public class Time {
         sys.times.add(this);
     }
 
+    public void unStemHeads(int y1, int y2) {
+        for (Head h : heads) {
+            int y = h.y();
+            if (y > y1 && y < y2) {h.unStem();}
+        }
+    }
+
+    public void stemHeads(Staff staff, boolean up, int y1, int y2) {
+        Stem s = new Stem(staff, up);
+        System.out.println("stemHeads(): size= " + heads.size());
+        for (Head h : heads) {
+            int y = h.y();
+            System.out.println("y:" + y + " y1:" + y1 + " y2:" + y2);
+            if (y > y1 && y < y2) {h.joinStem(s);}
+        }
+        if (s.heads.size() == 0) {
+            System.out.println("WTF---Empty Head List after stemming");
+        } else {
+            s.setWrongSides();
+        }
+    }
+
     //--------------------------------------------------List-------------------------------------------------
     public static class List extends ArrayList<Time> {
         public Sys sys;
