@@ -51,6 +51,19 @@ public class Head extends Mass implements Comparable<Head> {
                 }
             }
         });
+
+        addReaction(new Reaction("DOT") {
+            @Override
+            public int bid(Gesture g) {
+                int xH = Head.this.x(), yH = Head.this.y(), h = Head.this.H(), w = Head.this.W();
+                int x = g.vs.xM(), y = g.vs.yM();
+                if (x < xH || x > xH + 2*w || y < yH - h || y > yH + h) {return UC.noBid;}
+                return Math.abs(xH + w - x) + Math.abs(yH - y);
+            }
+
+            @Override
+            public void act(Gesture g) {if (Head.this.stem != null){Head.this.stem.cycleDot();}}
+        });
     }
 
     @Override
@@ -62,17 +75,32 @@ public class Head extends Mass implements Comparable<Head> {
         }
         // Glyph.HEAD_Q.showAt(g, H, time.x, staff.yTop() + line*H);
         (forcedGlyph == null? normalGlyph() : forcedGlyph).showAt(g, H, x(), y());
+        if (stem != null) {
+            int off = UC.gapRestToFirstDot, sp = UC.gapBetweenAugDot;
+            for (int i=0; i < stem.nDot; i++) {
+                g.fillOval(time.x + off + i*sp, y() - 3*H/2, 2*H/3, 2*H/3);
+            }
+        }
     }
 
     public int W() {return 24*staff.H()/10;}  // calculate width of single head
 
+    public int H() {return staff.H();}
+
     public int y() {return staff.yLine(line);}
 
-    public int x() {  // this is a STUB
-        return time.x;
+    public int x() {
+        int res = time.x;
+        if (wrongSide) {
+            res += (stem!=null && stem.isUp)? W():-W();
+        }
+        return res;
     }
 
-    public Glyph normalGlyph() {  // this is a STUB
+    public Glyph normalGlyph() {
+        if (stem == null) {return Glyph.HEAD_Q;}
+        if (stem.nFlag == -1) {return Glyph.HEAD_HALF;}
+        if (stem.nFlag == -2) {return Glyph.HEAD_W;}
         return Glyph.HEAD_Q;
     }
 
