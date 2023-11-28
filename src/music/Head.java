@@ -45,7 +45,8 @@ public class Head extends Mass implements Comparable<Head> {
                 int w = Head.this.W();
                 boolean up = x > t.x + w/2;
                 if (Head.this.stem == null) {
-                    t.stemHeads(STAFF, up, y1, y2);
+//                    t.stemHeads(STAFF, up, y1, y2);
+                    Stem.getStem(staff, time, y1, y2, up);
                 } else {
                     t.unStemHeads(y1, y2);
                 }
@@ -117,11 +118,11 @@ public class Head extends Mass implements Comparable<Head> {
         }
     }
 
-    public void joinStem(Stem s) {
-        if (stem != null) {unStem();}  // make sure this head is not on some other stem
-        s.heads.add(this);
-        stem = s;
-    }
+//    public void joinStem(Stem s) {
+//        if (stem != null) {unStem();}  // make sure this head is not on some other stem
+//        s.heads.add(this);
+//        stem = s;
+//    }
 
     @Override
     public int compareTo(Head h) {

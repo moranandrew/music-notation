@@ -32,6 +32,10 @@ public class AppMusicEd extends Window {
         });
     }
 
+    static int[] xPoly = {100, 200, 200, 100};
+    static int[] yPoly = {50, 70, 80, 60};
+    static Polygon poly = new Polygon(xPoly, yPoly, 4);
+
     public void paintComponent(Graphics g) {
         G.fillBack(g);
         g.setColor(Color.BLACK);
@@ -42,8 +46,14 @@ public class AppMusicEd extends Window {
 //            Glyph.HEAD_Q.showAt(g, H, 200, PAGE.margins.top + 4*H);
 //            g.setColor(Color.RED);
 //            g.drawRect(200, PAGE.margins.top + 3*H, 24*H/10,2*H);
-
         }
+        int H = 8, x1 = 100, x2 = 200;
+//        Beam.setMasterBeam(x1, 100 + G.rnd(100), x2, 100 + G.rnd(100));
+//        Beam.drawBeamStack(g, 0, 1, x1, x2, H);
+//        g.setColor(Color.ORANGE);
+//        Beam.drawBeamStack(g, 1, 3, x1 + 10, x2 - 10, H);
+//        Beam.setPoly(100, 100 + G.rnd(100), 200, G.rnd(200), 8);
+//        g.fillPolygon(Beam.poly);
         Ink.BUFFER.show(g);
     }
 

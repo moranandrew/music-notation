@@ -1,7 +1,10 @@
 package music;
 
 import graphicsLib.G;
+import graphicsLib.UC;
+import reaction.Gesture;
 import reaction.Mass;
+import reaction.Reaction;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,6 +28,37 @@ public class Sys extends Mass {
         for (int i = 0; i < sysFmt.size(); i++) {
             addStaff(new Staff(i, sysFmt.get(i)));
         }
+
+        addReaction(new Reaction("E-E") {  // beaming stems
+            @Override
+            public int bid(Gesture g) {
+                int x1 = g.vs.xL(), y1 = g.vs.yL(), x2 = g.vs.xH(), y2 = g.vs.yH();
+                System.out.println("before fast reject");
+                if (stems.fastReject(y1, y2)) {return UC.noBid;}
+                Stem.List temp = stems.allIntersectors(x1, y1, x2, y2);
+                System.out.println("intersected " + temp.size());
+                if (temp.size() < 2) {return UC.noBid;}
+                Beam beam = temp.get(0).beam;  // check all cross stems owned by same beam including null
+                for (Stem s: temp) {
+                    if (s.beam != beam) {return UC.noBid;}
+                }
+                if (beam == null && temp.size() != 2) {return UC.noBid;}
+                if (beam == null && (temp.get(0).nFlag != 0 || temp.get(1).nFlag != 0)) {return UC.noBid;}
+                return 50;
+            }
+
+            @Override
+            public void act(Gesture g) {
+                int x1 = g.vs.xL(), y1 = g.vs.yL(), x2 = g.vs.xH(), y2 = g.vs.yH();
+                Stem.List temp = stems.allIntersectors(x1, y1, x2, y2);
+                Beam beam = temp.get(0).beam;
+                if (beam == null) {
+                    new Beam(temp.get(0), temp.get(1));
+                } else {
+                    for (Stem s: temp) {s.incFlag();}
+                }
+            }
+        });
     }
 
     public Time getTime(int x) {return times.getTime(x); }
