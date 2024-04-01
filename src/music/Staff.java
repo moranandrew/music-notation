@@ -38,7 +38,7 @@ public class Staff extends Mass {
             }
         });
 
-        addReaction(new Reaction("S-S") {  //
+        addReaction(new Reaction("S-S") {  // toggle BarContinues
             @Override
             public int bid(Gesture g) {
                 if (Staff.this.sys.iSys != 0) {return UC.noBid;}

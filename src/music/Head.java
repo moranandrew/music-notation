@@ -24,7 +24,7 @@ public class Head extends Mass implements Comparable<Head> {
         time.heads.add(this);
         System.out.println("Head constructor line: " + line);
 
-        addReaction(new Reaction("S-S") {
+        addReaction(new Reaction("S-S") {  // Stem or unStem head
             @Override
             public int bid(Gesture g) {
                 int x = g.vs.xM(), y1 = g.vs.yL(), y2 = g.vs.yH();
@@ -53,7 +53,7 @@ public class Head extends Mass implements Comparable<Head> {
             }
         });
 
-        addReaction(new Reaction("DOT") {
+        addReaction(new Reaction("DOT") { //
             @Override
             public int bid(Gesture g) {
                 int xH = Head.this.x(), yH = Head.this.y(), h = Head.this.H(), w = Head.this.W();

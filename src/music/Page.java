@@ -74,7 +74,7 @@ public class Page extends Mass {
     public void addNewStaff(int yOff) {
         Staff.Fmt sf = new Staff.Fmt();
         int n = sysFmt.size();
-        sysFmt.addStaffFmt(sf, yOff);  // TODO: NEED TO VERIFY CORRECT
+        sysFmt.addStaffFmt(sf, yOff);
         // sysFmt.add(sf);
         // sysFmt.staffOffset.add(yOff);
         for (int i = 0; i < sysList.size(); i++) {

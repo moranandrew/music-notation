@@ -60,7 +60,7 @@ public class Stem extends Duration implements Comparable<Stem> {
             int yH = h.y();
             if (yH > y1 && yH < y2) {heads.add(h);}
         }
-        if (heads.size() == 0) {return null;}  // no stem created if thier are no heads
+        if (heads.size() == 0) {return null;}  // no stem created if there are no heads
         Beam b = internalStem(staff.sys, time.x, y1, y2);
         Stem res = new Stem(staff, heads, up);
         if (b != null) {b.addStem(res); res.nFlag = 1;}
