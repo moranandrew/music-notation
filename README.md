@@ -1,7 +1,4 @@
 # Gesture Based Music Notation System  
 ## Author: Andrew Moran  
-This project is a work in progress expected to be finished by the end of 2023  
 
-A more detailed README is currently being produced.
-
-Source reference for this project: [Intermediate Java by Marlin Eller](https://depts.washington.edu/cprogs/BCS/Books/BCS_MidJava.html)
+This project created a program that allows the user to write music notation through a series of predefined simple gestures. It uses a bidding system based on the type of gesture and location of the gesture on the screen to discern what notation the user intended. This project represents approximately 70 to 80 hours of time spent programming over a semester.
